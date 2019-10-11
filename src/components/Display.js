@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Display = ({
-  timer: { minutes = 4, seconds = 0 },
-  breakTimerOn,
-  sessionTimerOn
-}) => {
-  // console.log(timer)
-  // let { minutes, seconds } = timer;
-  // minutes = minutes < 10 ? `0${minutes}` : minutes;
-  // seconds = seconds < 10 ? `0${seconds}` : seconds;
-  const stylesWarning = minutes === 0 ? 'warning': ""; 
+const Display = ({ seconds, sessionTimerOn }) => {
+  const secondsToMinutes = timerTime => {
+    let minute, second;
+    if (timerTime % 60 === 0) {
+      minute = Math.floor(timerTime / 60);
+      second = 0;
+    } else {
+      minute = Math.floor(timerTime / 60);
+      second = Math.ceil(timerTime % 60);
+    }
+    return { minute, second };
+  };
+
+  const [timer, setTimer] = useState(secondsToMinutes(seconds));
+
+  useEffect(() => {
+    setTimer(secondsToMinutes(seconds));
+  }, [seconds]);
+
+  let { minute, second } = timer;
+  const stylesWarning = minute === 0 ? "warning" : "";
+  minute = minute < 10 ? `0${minute}` : minute;
+  second = second < 10 ? `0${second}` : second;
+
+  
   const timerLabel = sessionTimerOn ? "Session" : "Break";
-  console.log(`${minutes} ${seconds}`);
+  
+
   return (
     <div className={`container display ${stylesWarning}`}>
-      <h1 id="timer-label">{timerLabel}</h1>
-      <p id="time-left">
-        {minutes < 10 ? `0${minutes}` : minutes}:
-        {seconds < 10 ? `0${seconds}` : seconds}
-      </p>
+      <h2 id="timer-label">{timerLabel}</h2>
+      <p id="time-left">{minute + ":" + second}</p>
     </div>
   );
 };

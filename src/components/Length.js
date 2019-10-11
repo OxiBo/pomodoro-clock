@@ -4,7 +4,7 @@ const Length = ({ name, setTimerLength, minutes, timerOn }) => {
   const titleName = name.replace(/^./, str => str.toUpperCase());
   const [length, setLength] = useState(minutes);
 
-  const set = operation => {
+  const setType = operation => {
     if (timerOn === false) {
       setLength(
         operation === "increment" && length < 60
@@ -14,13 +14,11 @@ const Length = ({ name, setTimerLength, minutes, timerOn }) => {
           : length
       );
     }
-
-    // console.log(length);
   };
 
-  // useEffect(() => {
-  //   setLength(minutes);
-  // }, [minutes]);
+  useEffect(() => {
+    setLength(minutes);
+  }, [minutes]);
 
   useEffect(() => {
     setTimerLength(length, name);
@@ -31,11 +29,11 @@ const Length = ({ name, setTimerLength, minutes, timerOn }) => {
     <div className="length-container">
       <h2 id={`${name}-label`}>{`${titleName} Length`}</h2>
       <div className="container-small">
-        <button id={`${name}-increment`} onClick={() => set("increment")}>
+        <button id={`${name}-increment`} onClick={() => setType("increment")}>
           <i className="fas fa-arrow-circle-up fa-2x"></i>
         </button>
         <p id={`${name}-length`}>{length}</p>
-        <button id={`${name}-decrement`} onClick={() => set("decrement")}>
+        <button id={`${name}-decrement`} onClick={() => setType("decrement")}>
           <i className="fas fa-arrow-circle-down fa-2x"></i>
         </button>
       </div>
@@ -46,24 +44,3 @@ const Length = ({ name, setTimerLength, minutes, timerOn }) => {
 export default Length;
 
 // arrow up https://fontawesome.com/icons/arrow-circle-up?style=solid
-
-/*
-
-
-return (
-    <div className="length-container">
-      <h2 id={`${props.name}-label`}>{`${titleName} Length`}</h2>
-      <div className="container-small">
-        <button id={`${props.name}-increment`} onClick={(e) => props.setTimerLength("increment", props.name)}>
-          <i className="fas fa-arrow-circle-up fa-2x"></i>
-        </button>
-        <p id={`${props.name}-length`}>some numeber</p>
-        <button id={`${props.name}-decrement`} onClick={(e) => props.setTimerLength("decrement", props.name)}>
-          <i className="fas fa-arrow-circle-down fa-2x"></i>
-        </button>
-      </div>
-    </div>
-  );
-};
-
-*/

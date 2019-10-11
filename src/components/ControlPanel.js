@@ -11,7 +11,7 @@ const ControlPanel = ({ handleReset, timerGo, timerOn }) => {
         )}
       </button>
 
-      <button id="reset" onClick={handleReset}>
+      <button id="reset" onClick={() => handleReset()}>
         <i className="fas fa-sync fa-2x"></i>
       </button>
     </div>
